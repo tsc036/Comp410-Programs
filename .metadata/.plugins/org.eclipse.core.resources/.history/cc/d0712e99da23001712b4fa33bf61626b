@@ -1,0 +1,50 @@
+package DiGraph_A5;
+import java.util.HashSet;
+import java.util.Set;
+
+public class Node {
+	private long idNum;
+	private String name;
+	private Set<Edge> edges;
+	private int inEdges;
+	public Node(long idNum, String name) {
+		this.idNum = idNum;
+		this.name = name;
+		this.edges = new HashSet<Edge>();
+		this.inEdges = 0;
+	}
+	public long getIdNum() {
+		return idNum;
+	}
+	public void setIdNum(long idNum) {
+		this.idNum = idNum;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public Set<Edge> getEdges() {
+		return edges;
+	}
+	public void setEdges(Set<Edge> edges) {
+		this.edges = edges;
+	}
+	public int getInEdges() {
+		return inEdges;
+	}
+	public void setInEdges(int inEdges) {
+		this.inEdges = inEdges;
+	}
+	public boolean equals(Node n){
+		return n.getIdNum()==idNum||n.getName().equals(name);
+	}
+	public void incrementInEdges(){
+		inEdges++;
+	}
+	public void decrementInEdges(){
+		inEdges--;
+	}
+	
+}

@@ -1,0 +1,102 @@
+package DiGraph_A5;
+import java.util.ArrayList;
+import java.util.Hashtable;
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.Set;
+public class DiGraph implements DiGraphInterface {
+
+	// in here go all your data and methods for the graph
+	// and the topo sort operation
+	private Hashtable<String, Node> nodes;
+	long numNodes,numEdges;
+	public DiGraph ( ) { 
+	  nodes=new Hashtable<String,Node>();
+	  numNodes=0;
+	  numEdges=0;
+	}
+	public boolean addNode(long idNum,String label){
+		if(idNum>=0&&!nodes.containsKey(label)){
+			for(Node n:nodes.values()){
+				if(n.getIdNum()==idNum){
+					return false;
+				}
+			}
+			nodes.put(label, new Node(idNum,label));
+			numNodes++;
+			return true;
+		}
+		return false;
+	}
+	public boolean addEdge(long idNum,String sLabel,String dLabel, long weight,String eLabel){
+		if(idNum>=0&&nodes.containsKey(sLabel)&&nodes.containsKey(dLabel)){
+			if(!nodes.get(sLabel).getEdges().contains(new Edge(idNum,sLabel,dLabel,eLabel,weight))){
+				nodes.get(sLabel).getEdges().add(new Edge(idNum,sLabel,dLabel,eLabel,weight));
+				nodes.get(dLabel).incrementInEdges();
+				numEdges++;
+				return true;
+			}
+			return false;
+		}
+		return false;
+	}
+	public boolean delNode(String label){
+		if(nodes.containsKey(label)){
+			for(Edge e:nodes.get(label).getEdges()){
+				nodes.get(e.getDestination()).decrementInEdges();
+			}
+			numEdges-=nodes.get(label).getEdges().size();
+			nodes.remove(label);
+			numNodes--;
+			return true;
+		}
+		return false;
+	}
+	public boolean delEdge(String source,String destination){
+		if(nodes.containsKey(source)&&nodes.containsKey(destination)){
+			ArrayList<Edge> edges=nodes.get(source).getEdges();
+			for(Edge e:edges){
+				if(e.getDestination().equals(destination)){
+					numEdges--;
+					edges.remove(e);
+					nodes.get(destination).decrementInEdges();
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+	public long numNodes() {
+		return numNodes;
+	}
+	@Override
+	public long numEdges() {
+		return numEdges;
+	}
+	@Override
+	public String[] topoSort() {
+		Queue<Node> queue=new LinkedList<Node>();
+		String[] ans= new String[(int) numNodes];
+		int count=0;
+		for(Node n:nodes.values()){
+			if(n.getInEdges()==0){
+				queue.add(n);
+			}
+		}
+		while(!queue.isEmpty()){
+			Node hold=queue.remove();
+			ans[count]=hold.getName();
+			delNode(hold.getName());
+			count++;
+			for(Edge e:hold.getEdges()){
+				if(nodes.get(e.getDestination()).getInEdges()==0){
+					queue.add(nodes.get(e.getDestination()));
+				}
+			}
+		}
+		if(count!=ans.length){
+			return null;
+		}
+		return ans;
+	}
+}

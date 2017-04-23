@@ -1,0 +1,59 @@
+package DiGraph_A5;
+import java.util.ArrayList;
+import java.util.Random;
+
+import gradingTools.comp410.sharedClasses.MyRandom;
+public class Tester {
+	public static void main(String[] args){
+		exTest();
+	}
+	static void test1(){
+		DiGraph graph=new DiGraph();
+		System.out.println(graph.addNode(1, "f"));
+		System.out.println(graph.addNode(2, "z"));
+	}
+	static void test2(){
+		DiGraph graph=new DiGraph();
+		System.out.println(graph.addNode(1, "f"));
+		System.out.println(graph.addNode(3, "s"));
+		System.out.println(graph.addNode(7, "t"));
+		System.out.println(graph.addEdge(0, "f", "s", 0, null));
+		System.out.println(graph.addEdge(1, "f", "s", 0, null));
+		System.out.println(graph.addEdge(1, "f", "s", 0, null));
+	}
+	public static void exTest(){
+        long start,end,goodTime;
+          int goodNodesMade = 0,goodEdgesMade=0,badNodesMade=0,badEdgesMade=0;
+          DiGraph goodDiGraph = new DiGraph(); //first make good one
+          MyRandom R = new MyRandom(true);//make consistently seeded random for reproducable
+          start =System.nanoTime();
+          ArrayList<String> nodes = new ArrayList<String>();
+          for(int i=0;i<10000000;i++){ //1  million tries to add Nodes
+              String toAdd=R.nextString(1,7);
+              if(goodDiGraph.addNode(R.rand(0, 100000000),toAdd)){
+                  nodes.add(toAdd);
+                  goodNodesMade++;
+              }
+              if(goodNodesMade==100000)break;
+          }
+          for(int i=0;i<100000;i++){//try to make 1 million edges
+              if(nodes.isEmpty())break;
+              int src_index=R.rand(0, nodes.size()-1);
+              int dest_index=R.rand(0, nodes.size()-1);
+              if(src_index==dest_index)continue;
+              String src=nodes.get(src_index);
+              String dest=nodes.get(dest_index);
+                  if(goodDiGraph.addEdge(R.rand(0, 10000000), src, dest, R.rand(0, 10000000), R.nextString(1,100))){
+                      goodEdgesMade++;
+                      nodes.remove(dest_index);
+                  }
+          }
+           goodDiGraph.topoSort();
+          end = System.nanoTime();
+          goodTime = end-start;
+          System.out.println(goodTime);
+          
+        
+    }
+
+}

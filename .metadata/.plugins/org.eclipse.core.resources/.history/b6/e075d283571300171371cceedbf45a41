@@ -1,0 +1,11 @@
+package shitr;
+
+public class name {
+	public static void main(String[] args){
+		String s="tsc";
+		String t=s;
+		s+="l";
+		System.out.println(t);
+	}
+
+}

@@ -1,0 +1,23 @@
+package shitr;
+
+public class name {
+	private int i;
+	public name(int c){
+		i=c;
+	}
+	public int getI()
+	{
+		return i;
+	}
+	public void increment(){
+		i++;
+	}
+	public static void main(String[] args){
+		name n=new name(2);
+		name c=n;
+		c.increment();
+		System.out.println(c.getI());
+		
+	}
+
+}

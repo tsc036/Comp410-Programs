@@ -1,0 +1,46 @@
+package DiGraph_A5;
+import java.util.ArrayList;
+
+public class Node {
+	private long idNum;
+	private String name;
+	private ArrayList<Edge> edges;
+	private int inEdges;
+	public Node(long idNum, String name) {
+		this.idNum = idNum;
+		this.name = name;
+		this.edges = new ArrayList<Edge>();
+		this.inEdges = 0;
+	}
+	public long getIdNum() {
+		return idNum;
+	}
+	public void ArrayListIdNum(long idNum) {
+		this.idNum = idNum;
+	}
+	public String getName() {
+		return name;
+	}
+	public void ArrayListName(String name) {
+		this.name = name;
+	}
+	public ArrayList<Edge> getEdges() {
+		return edges;
+	}
+	public void ArrayListEdges(ArrayList<Edge> edges) {
+		this.edges = edges;
+	}
+	public int getInEdges() {
+		return inEdges;
+	}
+	public void ArrayListInEdges(int inEdges) {
+		this.inEdges = inEdges;
+	}
+	public void incrementInEdges(){
+		inEdges++;
+	}
+	public void decrementInEdges(){
+		inEdges--;
+	}
+	
+}

@@ -1,0 +1,13 @@
+package DiGraph_A5;
+
+public class Tester {
+	public static void main(String[] args){
+		test1();
+	}
+	static void test1(){
+		DiGraph graph=new DiGraph();
+		System.out.println(graph.addNode(1, "f"));
+		System.out.println(graph.addNode(2, "z"));
+	}
+
+}
